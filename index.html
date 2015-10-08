@@ -5,50 +5,48 @@
 </head>
 <body>
 
-<!-- <textarea name="translate-text"></textarea> -->
-
-<!-- <div id='MicrosoftTranslatorWidget' class='Dark' style='color:white;background-color:#555555'></div> -->
-
-
-
-<script type='text/javascript'>
-
-// setTimeout( function()
-// 	{{
-// 		var s=document.createElement('script');
-// 		s.type='text/javascript';
-// 		s.charset='UTF-8';
-// 		s.src=((location && location.href && location.href.indexOf('https') == 0)?'https://ssl.microsofttranslator.com':'http://www.microsofttranslator.com')+'/ajax/v3/WidgetV3.ashx?siteData=ueOIGRSKkd965FeEGM5JtQ**&ctf=True&ui=true&settings=Manual&from=';
-// 		var p=document.getElementsByTagName('head')[0]||document.documentElement;
-// 		p.insertBefore(s,p.firstChild); 
-// 	}},0);
-// </script>
-
-
 
 <textarea name="" id="translate"></textarea><br>
-<button type="button" onload="onload()">Translate to Spanish</button>
+<button type="button" onclick="translate();">Translate to Spanish</button>
 
 
 <script type="text/javascript">
-
-        onload = function ()
-        {
-            var from = "en", to = "es", text = "hello world";
-
-            var s = document.createElement("script");
-            s.src = "http://api.microsofttranslator.com/V2/Ajax.svc/Translate" +
-                "?appId=Bearer " + encodeURIComponent("gHab0/NaOIB2bnkQDG5lRfAAYRqWpCeLANyOc1UzCYM") +
-                "&from=" + encodeURIComponent(from) +
-                "&to=" + encodeURIComponent(to) +
-                "&text=" + encodeURIComponent(text) +
-                "&oncomplete=mycallback";
-            document.body.appendChild(s);
+        
+        
+        var clientId = "57480023-a45c-4c62-a813-c329788c6d16";
+        var clientSecret = " vyx1OpChijEimRD5y65x16t8zOuvrDRq1jXECHE9wNo=";
+        
+        
+        function translate() {
+            alert("attempt")
+            // var token = auth(clientId, clientSecret)
+            // var translation = detect(token, text)
+            
+            // alert(translation)
+        }
+        
+        // This is the Javascript way of doing ajax requests without using jQuery
+        function auth() {
+            var url = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
+            var params = "grant_type=client_credentials&client_id=" + encodeURIComponent(clientId)
+                + "&client_secret=" + encodeURIComponent(clientSecret) + "&scope=http://api.microsofttranslator.com";
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, false);
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("content-length", params.length);
+            xhr.send(params);
+            var token = JSON.parse(xhr.responseText);
+            return token;
         }
 
-        function mycallback(response)
-        {
-            alert(response);
+        function detect(token, text) {
+            var url = "http://api.microsofttranslator.com/v2/Ajax.svc/Detect?text=" + encodeURIComponent(text);
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, false);
+            xhr.setRequestHeader("authorization", "Bearer " + token.access_token);
+            xhr.send();
+            var res = JSON.parse(xhr.responseText);
+            return res;
         }
 
 </script>
