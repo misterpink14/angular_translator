@@ -14,17 +14,20 @@
     <script src="app/vendor/angular.min.js"></script>
   </head>
   <body ng-app='OurApp' style='text-align:center;'>
-    
-    <h2>The angular translator</h2>
+    <h2>The AngularJS Translator</h2><br>
     <textarea id="english"></textarea><br>
+    <br>
     English to :
     <div ng-controller='Dropdown'>
-      <select >
+      <select id="language">
           <option value="{{ lang.value }}" ng-repeat="lang in languages" ng-model="string" ng-click="">{{ lang.name }}</option>
       </select>
+    <br><br>
+    <textarea id="translation" readonly></textarea>
+    <br>
+    <button type="button" ng-href='#here' ng-click="t()">Translate</button>
     </div>
     
-    <textarea id="translation" readonly></textarea>
 
     <!-- Modules -->
     <script src="app/app.js"></script>
