@@ -1,54 +1,38 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-	<title></title>
-</head>
-<body>
+  <!--        
+      TODO : 
+        -encorporate script.js into the app
+        -styling / bootstrap stuff (if we want to get fancy)
+        -allow for the selected languages (this.value on the select Element)
+        -idk what else...its late
+  -->
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="app/vendor/angular.min.js"></script>
+  </head>
+  <body ng-app='OurApp' style='text-align:center;'>
+    
+    <h2>The angular translator</h2>
+    <textarea id="english"></textarea><br>
+    English to :
+    <div ng-controller='Dropdown'>
+      <select >
+          <option value="{{ lang.value }}" ng-repeat="lang in languages" ng-model="string" ng-click="">{{ lang.name }}</option>
+      </select>
+    </div>
+    
+    <textarea id="translation" readonly></textarea>
 
+    <!-- Modules -->
+    <script src="app/app.js"></script>
 
-<textarea name="" id="translate"></textarea><br>
-<button type="button" onclick="translate();">Translate to Spanish</button>
+    <!-- Controllers -->
+    <script src="app/controllers/Dropdown.js"></script>
 
-
-<script type="text/javascript">
-        
-        
-        var clientId = "57480023-a45c-4c62-a813-c329788c6d16";
-        var clientSecret = " vyx1OpChijEimRD5y65x16t8zOuvrDRq1jXECHE9wNo=";
-        
-        
-        function translate() {
-            alert("attempt")
-            // var token = auth(clientId, clientSecret)
-            // var translation = detect(token, text)
-            
-            // alert(translation)
-        }
-        
-        // This is the Javascript way of doing ajax requests without using jQuery
-        function auth() {
-            var url = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
-            var params = "grant_type=client_credentials&client_id=" + encodeURIComponent(clientId)
-                + "&client_secret=" + encodeURIComponent(clientSecret) + "&scope=http://api.microsofttranslator.com";
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, false);
-            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-            xhr.setRequestHeader("content-length", params.length);
-            xhr.send(params);
-            var token = JSON.parse(xhr.responseText);
-            return token;
-        }
-
-        function detect(token, text) {
-            var url = "http://api.microsofttranslator.com/v2/Ajax.svc/Detect?text=" + encodeURIComponent(text);
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", url, false);
-            xhr.setRequestHeader("authorization", "Bearer " + token.access_token);
-            xhr.send();
-            var res = JSON.parse(xhr.responseText);
-            return res;
-        }
-
-</script>
-</body>
+    <!-- Services -->
+    
+  </body>
 </html>

@@ -1,1 +1,2 @@
-var app = angular.module("TranslateApp", [])
+var app = angular.module('OurApp',[])
+
